@@ -44,7 +44,11 @@ public sealed class StorageService
         try
         {
             Directory.CreateDirectory(_dir);
-            File.WriteAllText(path, JsonSerializer.Serialize(value, JsonOptions));
+            // Write-then-rename: a crash or power cut mid-write corrupts only the
+            // temp file, never the live one (a corrupt current.json = lost service).
+            var tmp = path + ".tmp";
+            File.WriteAllText(tmp, JsonSerializer.Serialize(value, JsonOptions));
+            File.Move(tmp, path, overwrite: true);
         }
         catch
         {

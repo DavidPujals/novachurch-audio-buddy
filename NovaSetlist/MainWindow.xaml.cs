@@ -252,6 +252,8 @@ public partial class MainWindow : Window
             return;
         }
         _searchDialog = new SearchDialog(_vm) { Owner = this };
+        // Drop the reference on close so the window (and its visual tree) can be collected.
+        _searchDialog.Closed += (_, _) => _searchDialog = null;
         _searchDialog.Show();
     }
 

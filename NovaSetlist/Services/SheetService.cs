@@ -17,11 +17,13 @@ public sealed class SheetService
         if (string.IsNullOrWhiteSpace(config.SpreadsheetId) || config.SpreadsheetId == "PUT_ID_HERE")
             throw new InvalidOperationException("No Spreadsheet ID set — open Settings and paste your sheet's ID or URL.");
 
-        // Both tabs in flight at once — halves refresh latency.
+        // Both tabs in flight at once — halves refresh latency. WhenAll observes
+        // both outcomes, so one tab failing doesn't leave the other's exception dangling.
         var songsTask = FetchTabAsync(config.SpreadsheetId, config.SongsTab);
         var leadersTask = FetchTabAsync(config.SpreadsheetId, config.LeadersTab);
-        var songsCsv = await songsTask;
-        var leadersCsv = await leadersTask;
+        await Task.WhenAll(songsTask, leadersTask);
+        var songsCsv = songsTask.Result;
+        var leadersCsv = leadersTask.Result;
 
         var songs = ParseRows(songsCsv)
             .Select(r => new Song

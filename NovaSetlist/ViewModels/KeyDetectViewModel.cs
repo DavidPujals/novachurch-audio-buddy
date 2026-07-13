@@ -19,10 +19,15 @@ public partial class KeyDetectViewModel : ObservableObject, IDisposable
     private const double MinLevel = 0.002;     // ~-54 dBFS RMS
     private const long HoldMs = 5000;          // keep the last confident key this long
 
+    /// <summary>"Long ago" sentinel. Must NOT be long.MinValue: (now - MinValue)
+    /// overflows negative and reads as "just now" (same bug class as the
+    /// TimecodeViewModel false-green fix).</summary>
+    private const long NeverTick = -1_000_000_000;
+
     private readonly AppConfig _config;
     private readonly DispatcherTimer _timer;
     private KeyDetector? _detector;
-    private long _lastGoodTick = long.MinValue;
+    private long _lastGoodTick = NeverTick;
     private string _lastShownKey = "";
 
     public ObservableCollection<string> Devices { get; } = new();
@@ -83,7 +88,7 @@ public partial class KeyDetectViewModel : ObservableObject, IDisposable
         _detector?.Dispose();
         _detector = null;
         _timer?.Stop();
-        _lastGoodTick = long.MinValue;
+        _lastGoodTick = NeverTick;
         _lastShownKey = "";
         KeyText = "—";
         KeySub = "off";

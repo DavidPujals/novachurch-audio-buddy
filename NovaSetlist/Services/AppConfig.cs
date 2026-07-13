@@ -50,7 +50,10 @@ public sealed class AppConfig
     {
         try
         {
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(this, JsonOptions));
+            // Write-then-rename so an interrupted write can't corrupt the live file.
+            var tmp = FilePath + ".tmp";
+            File.WriteAllText(tmp, JsonSerializer.Serialize(this, JsonOptions));
+            File.Move(tmp, FilePath, overwrite: true);
             return true;
         }
         catch
