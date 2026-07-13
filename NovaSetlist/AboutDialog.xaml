@@ -1,0 +1,92 @@
+<Window x:Class="NovaSetlist.AboutDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About"
+        Width="430" SizeToContent="Height"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackBrush}"
+        Foreground="{StaticResource TextBrush}"
+        FontFamily="Segoe UI" FontSize="13"
+        TextOptions.TextFormattingMode="Display">
+    <StackPanel Margin="22,20">
+
+        <StackPanel Orientation="Horizontal">
+            <Border Width="52" Height="52" CornerRadius="12"
+                    Background="{StaticResource FieldBrush}"
+                    BorderBrush="{StaticResource HairlineBrush}" BorderThickness="1">
+                <TextBlock Text="AB" FontFamily="Consolas" FontWeight="Bold" FontSize="22"
+                           Foreground="{StaticResource GreenBrush}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="NovaChurch Audio Buddy" FontSize="17" FontWeight="SemiBold" />
+                <TextBlock x:Name="VersionText" Foreground="{StaticResource DimBrush}"
+                           FontSize="12" Margin="0,3,0,0" />
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Margin="1,14,0,0" TextWrapping="Wrap"
+                   Foreground="{StaticResource DimBrush}" FontSize="12"
+                   Text="Service set-list builder with a live SMPTE LTC timecode display and real-time musical key detection. Songs, keys and leaders sync from a Google Sheet." />
+
+        <Grid Margin="1,18,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="DETAILS" Style="{StaticResource SectionHeader}" />
+            <Rectangle Grid.Column="1" Height="1" Margin="10,1,0,0" VerticalAlignment="Center"
+                       Fill="{StaticResource HairlineBrush}" />
+        </Grid>
+
+        <Grid Margin="1,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="88" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
+                </Style>
+            </Grid.Resources>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Runtime" Foreground="{StaticResource FaintBrush}" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text=".NET 8 · WPF · self-contained" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Timecode" Foreground="{StaticResource FaintBrush}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="SMPTE LTC · 24 / 25 / 29.97DF / 30 fps autodetect" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Audio" Foreground="{StaticResource FaintBrush}" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="NAudio 2.2.1 · WDM capture" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Source" Foreground="{StaticResource FaintBrush}" />
+            <TextBlock Grid.Row="3" Grid.Column="1">
+                <Hyperlink x:Name="RepoLink" RequestNavigate="Link_RequestNavigate"
+                           Foreground="{StaticResource GreenBrush}" TextDecorations="None">
+                    <Run x:Name="RepoLinkText" />
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+
+        <Grid Margin="1,14,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="UPDATES" Style="{StaticResource SectionHeader}" />
+            <Rectangle Grid.Column="1" Height="1" Margin="10,1,0,0" VerticalAlignment="Center"
+                       Fill="{StaticResource HairlineBrush}" />
+        </Grid>
+
+        <TextBlock x:Name="UpdateStatus" Margin="1,0,0,0" TextWrapping="Wrap"
+                   Foreground="{StaticResource DimBrush}" FontSize="12"
+                   Text="New versions are published on GitHub and install in place." />
+
+        <Grid Margin="0,16,0,0">
+            <Button x:Name="UpdateButton" Content="Check for updates" MinWidth="140"
+                    HorizontalAlignment="Left" Click="Update_Click" />
+            <Button Content="Close" MinWidth="76" HorizontalAlignment="Right" IsCancel="True" />
+        </Grid>
+    </StackPanel>
+</Window>
