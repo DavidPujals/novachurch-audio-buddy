@@ -10,11 +10,13 @@ namespace NovaSetlist;
 public partial class MainWindow : Window
 {
     private readonly MainViewModel _vm = new();
+    private readonly Services.StorageService _windowStore = new();
 
     public MainWindow()
     {
         InitializeComponent();
         Ui.Dwm.UseDarkTitleBar(this);
+        RestoreWindowPlacement();
         DataContext = _vm;
         Loaded += async (_, _) => await _vm.InitializeAsync();
         SizeChanged += (_, _) =>
@@ -23,6 +25,51 @@ public partial class MainWindow : Window
             _vm.IsNarrow = ActualWidth < 758;
             _vm.IsShort = ActualHeight < 448;
         };
+    }
+
+    /// <summary>Reopens the window where it was last closed, if that spot still makes sense.</summary>
+    private void RestoreWindowPlacement()
+    {
+        var p = _windowStore.LoadWindow();
+        if (p is null || double.IsNaN(p.Left) || double.IsNaN(p.Top) || p.Width < 100 || p.Height < 80)
+            return;
+
+        var width = Math.Max(MinWidth, p.Width);
+        var height = Math.Max(MinHeight, p.Height);
+
+        // The title bar must land on today's monitor layout (screens may have
+        // been unplugged or rearranged since the last run) — else start fresh.
+        var left = SystemParameters.VirtualScreenLeft;
+        var top = SystemParameters.VirtualScreenTop;
+        var right = left + SystemParameters.VirtualScreenWidth;
+        var bottom = top + SystemParameters.VirtualScreenHeight;
+        if (p.Left + width < left + 60 || p.Left > right - 60 || p.Top < top - 8 || p.Top > bottom - 40)
+            return;
+
+        Left = p.Left;
+        Top = p.Top;
+        Width = width;
+        Height = height;
+        if (p.Maximized)
+            WindowState = WindowState.Maximized;
+    }
+
+    private void SaveWindowPlacement()
+    {
+        // Maximized/minimized: remember the normal-state bounds it would restore to.
+        var bounds = WindowState == WindowState.Normal
+            ? new Rect(Left, Top, ActualWidth, ActualHeight)
+            : RestoreBounds;
+        if (bounds.IsEmpty || bounds.Width < 100 || bounds.Height < 80)
+            return;
+        _windowStore.SaveWindow(new Models.WindowPlacement
+        {
+            Left = bounds.Left,
+            Top = bounds.Top,
+            Width = bounds.Width,
+            Height = bounds.Height,
+            Maximized = WindowState == WindowState.Maximized,
+        });
     }
 
     // ---------- search autocomplete ----------
@@ -234,6 +281,7 @@ public partial class MainWindow : Window
 
     protected override void OnClosed(EventArgs e)
     {
+        SaveWindowPlacement();
         _vm.FlushPendingSave();
         _vm.Timecode.Dispose();
         _vm.KeyDetect.Dispose();

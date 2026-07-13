@@ -159,6 +159,13 @@
                               Text="{Binding Leader}" />
                 </StackPanel>
 
+                <StackPanel Orientation="Horizontal" Margin="0,0,18,4">
+                    <TextBlock Text="BPM" Style="{StaticResource SectionHeader}"
+                               FontSize="10" Margin="0,0,7,0" />
+                    <TextBox Width="52" VerticalAlignment="Center" FontFamily="Consolas"
+                             Text="{Binding Bpm, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
                 <ItemsControl ItemsSource="{x:Static ui:RowColors.Tokens}"
                               VerticalAlignment="Center" Margin="0,0,0,4">
                     <ItemsControl.ItemsPanel>
@@ -456,6 +463,20 @@
                                             <TextBlock DockPanel.Dock="Right" Text="{Binding DefaultKey}"
                                                        Foreground="{StaticResource DimBrush}"
                                                        FontFamily="Consolas" Margin="14,0,4,0" />
+                                            <TextBlock DockPanel.Dock="Right"
+                                                       Text="{Binding Bpm, StringFormat={}{0} bpm}"
+                                                       Foreground="{StaticResource FaintBrush}"
+                                                       FontFamily="Consolas" Margin="14,0,0,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Bpm}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                             <TextBlock Text="{Binding Name}" />
                                         </DockPanel>
                                     </DataTemplate>
@@ -748,6 +769,19 @@
                     <TextBlock Text="{Binding NowPlayingName}" HorizontalAlignment="Center" Margin="0,8,0,2"
                                Foreground="{StaticResource DimBrush}" FontSize="12.5"
                                TextTrimming="CharacterEllipsis" MaxWidth="270" />
+                    <TextBlock Text="{Binding NowPlayingBpm}" HorizontalAlignment="Center" Margin="0,0,0,2"
+                               FontFamily="Consolas" FontWeight="Bold" FontSize="12"
+                               Foreground="{StaticResource DimBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NowPlayingBpm}" Value="">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <TextBlock Text="{Binding CountdownText}" HorizontalAlignment="Center"
                                FontFamily="Consolas" FontWeight="Bold">
                         <TextBlock.Style>

@@ -29,6 +29,7 @@ public sealed class SheetService
                 Name = Cell(r, 0),
                 DefaultKey = Music.Keys.Normalize(Cell(r, 1)),
                 Length = Cell(r, 2),
+                Bpm = Cell(r, 3),
             })
             .Where(s => s.Name.Length > 0)
             .ToList();
@@ -43,8 +44,11 @@ public sealed class SheetService
 
     private static async Task<string> FetchTabAsync(string spreadsheetId, string tab)
     {
+        // headers=1: without it Google GUESSES how many rows are headers, and a
+        // mostly-empty column (e.g. a fresh BPM column) can make it swallow the
+        // whole sheet as one giant multi-row header, returning almost no songs.
         var url = $"https://docs.google.com/spreadsheets/d/{Uri.EscapeDataString(spreadsheetId)}" +
-                  $"/gviz/tq?tqx=out:csv&sheet={Uri.EscapeDataString(tab)}";
+                  $"/gviz/tq?tqx=out:csv&headers=1&sheet={Uri.EscapeDataString(tab)}";
         using var response = await Http.GetAsync(url);
         response.EnsureSuccessStatusCode();
         var text = await response.Content.ReadAsStringAsync();

@@ -40,6 +40,20 @@
                         <TextBlock DockPanel.Dock="Right" Text="{Binding DefaultKey}"
                                    Foreground="{StaticResource DimBrush}"
                                    FontFamily="Consolas" Margin="14,0,4,0" />
+                        <TextBlock DockPanel.Dock="Right"
+                                   Text="{Binding Bpm, StringFormat={}{0} bpm}"
+                                   Foreground="{StaticResource FaintBrush}"
+                                   FontFamily="Consolas" Margin="14,0,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Bpm}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <TextBlock Text="{Binding Name}" />
                     </DockPanel>
                 </DataTemplate>

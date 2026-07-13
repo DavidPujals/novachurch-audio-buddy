@@ -71,6 +71,10 @@ public partial class TimecodeViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private string nowPlayingName = "";
 
+    /// <summary>Tempo line under the now-playing name, e.g. "72 BPM"; "" = none in the sheet.</summary>
+    [ObservableProperty]
+    private string nowPlayingBpm = "";
+
     /// <summary>"" (nothing), "cued" (waiting for timecode) or "playing".</summary>
     [ObservableProperty]
     private string playState = "";
@@ -178,9 +182,10 @@ public partial class TimecodeViewModel : ObservableObject, IDisposable
 
     /// <summary>First ▶ click: cue the song. If timecode is already locked the
     /// countdown starts on it right away; otherwise it waits for lock.</summary>
-    public void Cue(string songName, double lengthSeconds)
+    public void Cue(string songName, double lengthSeconds, string bpm = "")
     {
         NowPlayingName = songName;
+        NowPlayingBpm = FormatBpm(bpm);
         _lengthSeconds = lengthSeconds;
         _shownCountdownSec = int.MinValue;
         _anchorWallTick = Environment.TickCount64;
@@ -216,9 +221,19 @@ public partial class TimecodeViewModel : ObservableObject, IDisposable
         UpdateCountdown();
     }
 
+    /// <summary>"72" → "72 BPM"; passes through if the sheet already spells out a unit.</summary>
+    private static string FormatBpm(string bpm)
+    {
+        bpm = bpm.Trim();
+        if (bpm.Length == 0)
+            return "";
+        return bpm.EndsWith("bpm", StringComparison.OrdinalIgnoreCase) ? bpm : bpm + " BPM";
+    }
+
     public void StopCountdown()
     {
         NowPlayingName = "";
+        NowPlayingBpm = "";
         PlayState = "";
         CountdownText = "";
         CountdownSub = "";

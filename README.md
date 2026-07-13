@@ -6,12 +6,12 @@ A small Windows desktop app for building a service (setlist) order. Add songs, p
 
 1. Create a Google Sheet with **two tabs**:
 
-   **Tab `Songs`** — header row, then one song per row. The Length column (m:ss) is optional and drives the now-playing countdown:
+   **Tab `Songs`** — header row, then one song per row. The Length column (m:ss) is optional and drives the now-playing countdown; the BPM column (column D) is optional and shows in search results, the row editor and the now-playing panel:
 
-   | Song Name | Default Key | Length |
-   |-----------|-------------|--------|
-   | Great Are You Lord | G | 5:30 |
-   | Oceans | D | 8:55 |
+   | Song Name | Default Key | Length | BPM |
+   |-----------|-------------|--------|-----|
+   | Great Are You Lord | G | 5:30 | 72 |
+   | Oceans | D | 8:55 | 64 |
 
    **Tab `Leaders`** — header row, then one name per row:
 
@@ -50,10 +50,11 @@ Double-click `NovaChurch Audio Buddy.exe` (with `appsettings.json` next to it). 
 - **Search box** — type part of a song name; Enter adds the top match (or pick from the list) with its default key filled in.
 - **+ Add manually** — for a song that isn't in the sheet (added to this service only, never written back to the sheet).
 - **Rows at a glance** — each row shows the song, its key (with the enharmonic spelling, e.g. `F# (= Gb)`) and the leader as plain text.
-- **✎ (pencil)** — opens the row's inline editor: key dropdown (majors and minors — `Gm`, `F#m`, …), leader dropdown (pick from the sheet or type a new name), and a colour strip to colour-code the song. Click ✓ to close.
+- **✎ (pencil)** — opens the row's inline editor: key dropdown (majors and minors — `Gm`, `F#m`, …), leader dropdown (pick from the sheet or type a new name), a BPM box, and a colour strip to colour-code the song. Click ✓ to close.
 - **Drag a song's name** to reorder; click the name to grey it out as completed. **✕** removes a row, or right-click any row for edit/remove.
 - **Small windows** — the layout adapts: below ~760 px wide the rows go compact (name + key, actions via right-click); below ~450 px tall the top bar folds into a ☰ menu.
-- **▶** — marks a song as now playing: a countdown of its Length runs under the timecode (locked to LTC when timecode is running, wall clock otherwise). Click again to stop.
+- **▶** — marks a song as now playing: a countdown of its Length runs under the timecode (locked to LTC when timecode is running, wall clock otherwise), with the song's BPM shown under its name. Click again to stop.
+- The window reopens at the size and position you left it (per machine, stored in `%APPDATA%\NovaSetlist\window.json`).
 - **Copy as text** — puts a clean plain-text order on the clipboard, e.g. `1. Song Name — Key G — Leader: Sarah`.
 - **New service** — clears the list (asks first).
 - **Settings** — set the spreadsheet ID / tab names from inside the app.

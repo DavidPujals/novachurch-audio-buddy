@@ -125,6 +125,7 @@ public partial class MainViewModel : ObservableObject
                     Leader = dto.Leader,
                     Color = dto.Color,
                     Length = dto.Length,
+                    Bpm = dto.Bpm,
                     IsCompleted = dto.Completed,
                 });
                 var leader = dto.Leader.Trim();
@@ -208,7 +209,7 @@ public partial class MainViewModel : ObservableObject
     /// <summary>Adds a song from the master list (autocomplete pick), filling its default key.</summary>
     public void AddSong(Song song)
     {
-        AddItem(song.Name, song.DefaultKey, song.Length);
+        AddItem(song.Name, song.DefaultKey, song.Length, song.Bpm);
         SearchText = "";
     }
 
@@ -227,13 +228,13 @@ public partial class MainViewModel : ObservableObject
         name = name.Trim();
         if (name.Length == 0)
             return;
-        AddItem(name, Music.Keys.Normalize(key), "");
+        AddItem(name, Music.Keys.Normalize(key), "", "");
     }
 
-    private void AddItem(string name, string key, string length)
+    private void AddItem(string name, string key, string length, string bpm)
     {
         // OnItemsChanged renumbers and queues the save.
-        AttachItem(new SetItemViewModel { Name = name, SelectedKey = key, Leader = "", Length = length });
+        AttachItem(new SetItemViewModel { Name = name, SelectedKey = key, Leader = "", Length = length, Bpm = bpm });
     }
 
     private void AttachItem(SetItemViewModel item)
@@ -271,7 +272,7 @@ public partial class MainViewModel : ObservableObject
         foreach (var other in Items)
             other.IsPlaying = false;
         item.IsPlaying = true;
-        Timecode.Cue(item.Name, Music.SongLength.ParseSeconds(item.Length));
+        Timecode.Cue(item.Name, Music.SongLength.ParseSeconds(item.Length), item.Bpm);
     }
 
     // ---------- service-level actions ----------
@@ -381,6 +382,7 @@ public partial class MainViewModel : ObservableObject
                 Leader = i.Leader,
                 Color = i.Color,
                 Length = i.Length,
+                Bpm = i.Bpm,
                 Completed = i.IsCompleted,
             }).ToList(),
         });

@@ -14,12 +14,16 @@ public sealed class StorageService
 
     private string CachePath => Path.Combine(_dir, "cache.json");
     private string CurrentPath => Path.Combine(_dir, "current.json");
+    private string WindowPath => Path.Combine(_dir, "window.json");
 
     public CacheData? LoadCache() => Load<CacheData>(CachePath);
     public void SaveCache(CacheData cache) => Save(CachePath, cache);
 
     public ServiceSet? LoadCurrent() => Load<ServiceSet>(CurrentPath);
     public void SaveCurrent(ServiceSet set) => Save(CurrentPath, set);
+
+    public WindowPlacement? LoadWindow() => Load<WindowPlacement>(WindowPath);
+    public void SaveWindow(WindowPlacement placement) => Save(WindowPath, placement);
 
     private static T? Load<T>(string path) where T : class
     {

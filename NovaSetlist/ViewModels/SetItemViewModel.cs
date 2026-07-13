@@ -26,6 +26,10 @@ public partial class SetItemViewModel : ObservableObject
     [ObservableProperty]
     private string length = "";
 
+    /// <summary>Tempo from the sheet ("72"); "" = unknown.</summary>
+    [ObservableProperty]
+    private string bpm = "";
+
     /// <summary>True while the row shows its inline editor (pencil toggled).</summary>
     [ObservableProperty]
     private bool isEditing;

@@ -12,6 +12,9 @@ public sealed class SetItemDto
     /// <summary>Song length from the sheet; "" = unknown.</summary>
     public string Length { get; set; } = "";
 
+    /// <summary>Tempo from the sheet ("72"); "" = unknown.</summary>
+    public string Bpm { get; set; } = "";
+
     /// <summary>True once the song has been played this service (row greys out).</summary>
     public bool Completed { get; set; }
 }
