@@ -43,7 +43,7 @@ A small Windows desktop app for building a service (setlist) order. Add songs, p
 
 ## Running
 
-Double-click `NovaChurch Audio Buddy.exe` (with `appsettings.json` next to it). On launch it pulls both tabs; **Refresh** re-pulls on demand. If there's no internet, it keeps working from the last successful pull and shows *"Using cached list — last synced …"* in the status line.
+Double-click `NovaChurch Audio Buddy.exe` (with `appsettings.json` next to it). On launch it pulls both tabs; **Refresh** re-pulls on demand. Every sync also updates the Length and BPM of songs already in the service from the sheet — no need to re-add a song after fixing its timestamp. If there's no internet, it keeps working from the last successful pull and shows *"Using cached list — last synced …"* in the status line.
 
 ### Using the app
 

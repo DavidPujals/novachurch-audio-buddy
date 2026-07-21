@@ -185,6 +185,22 @@ public partial class MainViewModel : ObservableObject
         foreach (var l in leaders.Concat(extras))
             Leaders.Add(l);
 
+        // Sheet edits flow into the current service: every sync refreshes each
+        // row's Length and BPM from its master song, so a corrected timestamp
+        // doesn't require re-adding the song. An EMPTY sheet cell never wipes a
+        // value someone typed by hand; keys/leaders are per-service and untouched.
+        foreach (var item in Items)
+        {
+            var song = songs.FirstOrDefault(s =>
+                string.Equals(s.Name.Trim(), item.Name.Trim(), StringComparison.OrdinalIgnoreCase));
+            if (song is null)
+                continue; // manual song, or removed from the sheet
+            if (song.Length.Length > 0)
+                item.Length = song.Length;
+            if (song.Bpm.Length > 0)
+                item.Bpm = song.Bpm;
+        }
+
         UpdateSearchResults();
     }
 
