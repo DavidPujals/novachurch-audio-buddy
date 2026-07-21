@@ -52,6 +52,66 @@
         <TextBlock Text="WDM audio input with the band / music feed — the detected key shows under the timecode"
                    Foreground="{StaticResource FaintBrush}" FontSize="11" TextWrapping="Wrap" Margin="2,4,0,0" />
 
+        <Grid Margin="1,20,0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="SPL METER" Style="{StaticResource SectionHeader}" />
+            <Rectangle Grid.Column="1" Height="1" Margin="10,1,0,0" VerticalAlignment="Center"
+                       Fill="{StaticResource HairlineBrush}" />
+        </Grid>
+
+        <CheckBox x:Name="SplEnabledBox" Content="Show a live SPL(A) meter in the side panel" Margin="1,8,0,0" />
+
+        <TextBlock Text="INPUT" Style="{StaticResource SectionHeader}" FontSize="10" Margin="1,12,0,5" />
+        <ComboBox x:Name="SplDeviceBox" />
+        <TextBlock Text="WDM audio input with the measurement mic"
+                   Foreground="{StaticResource FaintBrush}" FontSize="11" Margin="2,4,0,0" />
+
+        <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="RESPONSE" Style="{StaticResource SectionHeader}" FontSize="10" Margin="1,0,0,5" />
+                <ComboBox x:Name="SplResponseBox">
+                    <ComboBoxItem Content="Slow (1 s)" />
+                    <ComboBoxItem Content="Fast (125 ms)" />
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="CALIBRATION OFFSET" Style="{StaticResource SectionHeader}" FontSize="10" Margin="1,0,0,5" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="−1 dB" MinWidth="52" Padding="6,5" Click="SplOffsetDown_Click" />
+                    <TextBox x:Name="SplOffsetBox" Width="58" Margin="6,0" MinHeight="28"
+                             HorizontalContentAlignment="Center" FontFamily="Consolas"
+                             TextChanged="SplOffset_TextChanged" />
+                    <Button Content="+1 dB" MinWidth="52" Padding="6,5" Click="SplOffsetUp_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <TextBlock Text="Offset applies live — trim it until the readout matches a reference SPL meter"
+                   Foreground="{StaticResource FaintBrush}" FontSize="11" TextWrapping="Wrap" Margin="2,4,0,0" />
+
+        <TextBlock Text="COLOUR ZONES" Style="{StaticResource SectionHeader}" FontSize="10" Margin="1,12,0,5" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="YELLOW FROM" Foreground="{StaticResource DimBrush}" FontSize="11"
+                       VerticalAlignment="Center" Margin="1,0,7,0" />
+            <TextBox x:Name="SplYellowBox" Width="52" MinHeight="28"
+                     HorizontalContentAlignment="Center" FontFamily="Consolas" />
+            <TextBlock Text="RED FROM" Foreground="{StaticResource DimBrush}" FontSize="11"
+                       VerticalAlignment="Center" Margin="16,0,7,0" />
+            <TextBox x:Name="SplRedBox" Width="52" MinHeight="28"
+                     HorizontalContentAlignment="Center" FontFamily="Consolas" />
+            <TextBlock Text="dB(A)" Foreground="{StaticResource FaintBrush}" FontSize="11"
+                       VerticalAlignment="Center" Margin="8,0,0,0" />
+        </StackPanel>
+        <TextBlock Text="The readout is green below the yellow level"
+                   Foreground="{StaticResource FaintBrush}" FontSize="11" Margin="2,4,0,0" />
+
         <Grid Margin="0,20,0,0">
             <Button Content="About" MinWidth="76" HorizontalAlignment="Left" Click="About_Click" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

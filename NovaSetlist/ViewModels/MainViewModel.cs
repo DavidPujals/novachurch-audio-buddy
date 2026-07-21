@@ -24,6 +24,7 @@ public partial class MainViewModel : ObservableObject
     public AppConfig Config => _config;
     public TimecodeViewModel Timecode { get; }
     public KeyDetectViewModel KeyDetect { get; }
+    public SplViewModel Spl { get; }
 
     public ObservableCollection<SetItemViewModel> Items { get; } = new();
     public ObservableCollection<Song> SearchResults { get; } = new();
@@ -62,6 +63,7 @@ public partial class MainViewModel : ObservableObject
         Items.CollectionChanged += OnItemsChanged;
         Timecode = new TimecodeViewModel(_config);
         KeyDetect = new KeyDetectViewModel(_config);
+        Spl = new SplViewModel(_config);
         _saveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(300) };
         _saveTimer.Tick += (_, _) =>
         {

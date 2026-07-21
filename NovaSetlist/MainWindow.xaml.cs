@@ -278,6 +278,11 @@ public partial class MainWindow : Window
             return;
         _vm.Timecode.SelectedDevice = dialog.TimecodeDevice;
         _vm.KeyDetect.SelectedDevice = dialog.KeyDetectDevice;
+        _vm.Spl.FastResponse = dialog.SplFast;
+        _vm.Spl.YellowFrom = dialog.SplYellowLevel;
+        _vm.Spl.RedFrom = dialog.SplRedLevel;
+        _vm.Spl.SelectedDevice = dialog.SplDevice;
+        _vm.Spl.IsEnabled = dialog.SplEnabled;
         await _vm.ApplySheetSettingsAsync(dialog.SpreadsheetId, dialog.SongsTabName, dialog.LeadersTabName);
     }
 
@@ -287,6 +292,7 @@ public partial class MainWindow : Window
         _vm.FlushPendingSave();
         _vm.Timecode.Dispose();
         _vm.KeyDetect.Dispose();
+        _vm.Spl.Dispose();
         base.OnClosed(e);
     }
 }

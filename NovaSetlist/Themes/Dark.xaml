@@ -367,6 +367,40 @@
         </Style.Triggers>
     </Style>
 
+    <!-- ============================ CheckBox ============================ -->
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                        <Border x:Name="Box" Width="17" Height="17" CornerRadius="4"
+                                Background="{StaticResource FieldBrush}"
+                                BorderBrush="{StaticResource HairlineBrush}" BorderThickness="1"
+                                VerticalAlignment="Center" SnapsToDevicePixels="True">
+                            <TextBlock x:Name="Check" Text="✓" FontSize="11" FontWeight="Bold"
+                                       Foreground="{StaticResource GreenBrush}" Visibility="Collapsed"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="0,-1,0,0" />
+                        </Border>
+                        <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Check" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource FaintBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ============================ ContextMenu ============================ -->
     <Style TargetType="ContextMenu">
         <Setter Property="Foreground" Value="{StaticResource TextBrush}" />

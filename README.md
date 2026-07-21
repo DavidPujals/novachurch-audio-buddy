@@ -68,6 +68,10 @@ The panel on the right decodes **SMPTE LTC** from any WDM audio input and shows 
 
 Give it a second WDM input carrying the band / music feed (Settings → Audio inputs → Key detection) and the panel shows the key being played, updated as the music moves. It listens to a few seconds of harmonic context, so give it a moment after a key change; it shows "listening…" instead of guessing when it isn't confident. A feed with bass in it works best — the bass carries the tonality.
 
+### SPL meter
+
+The bottom of the side panel shows a live **SPL(A)** reading (IEC A-weighting, Slow 1 s or Fast 125 ms response) from a measurement-mic input picked in **Settings → SPL meter**. Calibrate it against a reference SPL meter with the **calibration offset** — type a value or trim with the −1 dB / +1 dB buttons; the offset applies live while the Settings window is open, so you can dial it in as you watch both meters. **Colour zones** recolour the number as the room gets louder: green until the yellow level, then yellow, then red. Untick "Show a live SPL(A) meter" to hide the section entirely.
+
 The current service auto-saves on every change (`%APPDATA%\NovaSetlist\current.json`) and is restored when the app reopens.
 
 ## Updates

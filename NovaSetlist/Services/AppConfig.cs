@@ -17,6 +17,24 @@ public sealed class AppConfig
     /// <summary>waveIn product name of the key-detection input; "" = off.</summary>
     public string KeyDetectDevice { get; set; } = "";
 
+    /// <summary>waveIn product name of the SPL meter input; "" = off.</summary>
+    public string SplDevice { get; set; } = "";
+
+    /// <summary>Whether the SPL(A) meter section shows in the side panel.</summary>
+    public bool SplEnabled { get; set; } = true;
+
+    /// <summary>Calibration offset in dB added to the SPL input level.</summary>
+    public double SplOffset { get; set; } = 100;
+
+    /// <summary>SPL level where the readout turns yellow (green below).</summary>
+    public double SplYellow { get; set; } = 85;
+
+    /// <summary>SPL level where the readout turns red.</summary>
+    public double SplRed { get; set; } = 95;
+
+    /// <summary>Time weighting: true = Fast (125 ms), false = Slow (1 s).</summary>
+    public bool SplFast { get; set; }
+
     private static string FilePath => Path.Combine(AppContext.BaseDirectory, "appsettings.json");
 
     /// <summary>Loads appsettings.json from next to the exe; falls back to defaults if missing/invalid.</summary>
@@ -34,6 +52,7 @@ public sealed class AppConfig
                     if (string.IsNullOrWhiteSpace(cfg.LeadersTab)) cfg.LeadersTab = "Leaders";
                     cfg.TimecodeDevice = cfg.TimecodeDevice?.Trim() ?? "";
                     cfg.KeyDetectDevice = cfg.KeyDetectDevice?.Trim() ?? "";
+                    cfg.SplDevice = cfg.SplDevice?.Trim() ?? "";
                     return cfg;
                 }
             }

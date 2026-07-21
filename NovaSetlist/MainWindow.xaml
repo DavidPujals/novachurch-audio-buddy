@@ -641,7 +641,7 @@
                             <Setter Property="Margin" Value="4,16,4,3" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                    <Setter Property="Margin" Value="4,6,4,2" />
+                                    <Setter Property="Margin" Value="4,4,4,1" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -654,7 +654,7 @@
                                 <Setter Property="Foreground" Value="{StaticResource FaintBrush}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                        <Setter Property="FontSize" Value="26" />
+                                        <Setter Property="FontSize" Value="24" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding TcState}" Value="signal">
                                         <Setter Property="Foreground" Value="{StaticResource DimBrush}" />
@@ -766,9 +766,20 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <TextBlock Text="{Binding NowPlayingName}" HorizontalAlignment="Center" Margin="0,8,0,2"
+                    <TextBlock Text="{Binding NowPlayingName}" HorizontalAlignment="Center"
                                Foreground="{StaticResource DimBrush}" FontSize="12.5"
-                               TextTrimming="CharacterEllipsis" MaxWidth="270" />
+                               TextTrimming="CharacterEllipsis" MaxWidth="270">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="0,8,0,2" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                        <Setter Property="Margin" Value="0,4,0,1" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <TextBlock Text="{Binding NowPlayingBpm}" HorizontalAlignment="Center" Margin="0,0,0,2"
                                FontFamily="Consolas" FontWeight="Bold" FontSize="12"
                                Foreground="{StaticResource DimBrush}">
@@ -807,7 +818,17 @@
                     </TextBlock>
                     <TextBlock Text="{Binding CountdownSub}" HorizontalAlignment="Center"
                                Foreground="{StaticResource DimBrush}" FontSize="11"
-                               TextWrapping="Wrap" TextAlignment="Center" />
+                               TextWrapping="Wrap" TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </StackPanel>
 
                 <!-- Live key detection -->
@@ -818,7 +839,7 @@
                                 <Setter Property="Margin" Value="2,20,0,2" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                        <Setter Property="Margin" Value="2,8,0,2" />
+                                        <Setter Property="Margin" Value="2,3,0,1" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -832,15 +853,17 @@
                                    Fill="{StaticResource HairlineBrush}" />
                     </Grid>
 
-                    <TextBlock Text="{Binding KeyText}" HorizontalAlignment="Center" Margin="0,8,0,2"
+                    <TextBlock Text="{Binding KeyText}" HorizontalAlignment="Center"
                                FontFamily="Consolas" FontWeight="Bold">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontSize" Value="26" />
+                                <Setter Property="Margin" Value="0,8,0,2" />
                                 <Setter Property="Foreground" Value="{StaticResource FaintBrush}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
                                         <Setter Property="FontSize" Value="20" />
+                                        <Setter Property="Margin" Value="0,4,0,1" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding KeyState}" Value="detected">
                                         <Setter Property="Foreground" Value="{StaticResource GreenBrush}" />
@@ -853,6 +876,69 @@
                         </TextBlock.Style>
                     </TextBlock>
                     <TextBlock Text="{Binding KeySub}" HorizontalAlignment="Center"
+                               Foreground="{StaticResource DimBrush}" FontSize="11"
+                               TextTrimming="CharacterEllipsis" MaxWidth="270">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- Live SPL(A) meter (optional — enabled in Settings) -->
+                <StackPanel DataContext="{Binding DataContext.Spl, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Visibility="{Binding IsEnabled, Converter={StaticResource BoolToVis}}">
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Margin" Value="2,20,0,2" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                        <Setter Property="Margin" Value="2,3,0,1" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="SPL" Style="{StaticResource SectionHeader}" />
+                        <Rectangle Grid.Column="1" Height="1" Margin="10,1,0,0" VerticalAlignment="Center"
+                                   Fill="{StaticResource HairlineBrush}" />
+                    </Grid>
+
+                    <TextBlock Text="{Binding SplText}" HorizontalAlignment="Center"
+                               FontFamily="Consolas" FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="26" />
+                                <Setter Property="Margin" Value="0,8,0,2" />
+                                <Setter Property="Foreground" Value="{StaticResource FaintBrush}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.IsShort, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                        <Setter Property="FontSize" Value="20" />
+                                        <Setter Property="Margin" Value="0,4,0,1" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SplState}" Value="green">
+                                        <Setter Property="Foreground" Value="{StaticResource GreenBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SplState}" Value="yellow">
+                                        <Setter Property="Foreground" Value="{StaticResource AmberBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SplState}" Value="red">
+                                        <Setter Property="Foreground" Value="{StaticResource RedBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="{Binding SplSub}" HorizontalAlignment="Center"
                                Foreground="{StaticResource DimBrush}" FontSize="11"
                                TextTrimming="CharacterEllipsis" MaxWidth="270">
                         <TextBlock.Style>
