@@ -13,16 +13,18 @@ namespace NovaSetlist.Services;
 public static class UpdateService
 {
     public const string Owner = "DavidPujals";
-    public const string Repo = "novachurch-audio-buddy";
+    public const string Repo = "audio-buddy";
     public const string RepoUrl = $"https://github.com/{Owner}/{Repo}";
-    private const string AssetName = "NovaChurchAudioBuddy.exe";
+    // Older installs look for the previous asset name and fall back to the first
+    // .exe asset — keep exactly one .exe per release so they land on the right file.
+    private const string AssetName = "AudioBuddy.exe";
 
     private static readonly HttpClient Http = CreateClient();
 
     private static HttpClient CreateClient()
     {
         var c = new HttpClient();
-        c.DefaultRequestHeaders.UserAgent.ParseAdd("NovaChurch-Audio-Buddy");
+        c.DefaultRequestHeaders.UserAgent.ParseAdd("Audio-Buddy");
         c.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
         // Covers the API call and download headers only — the download body is
         // streamed after GetAsync returns, so big downloads aren't cut off.

@@ -1,4 +1,4 @@
-# NovaChurch Audio Buddy
+# Audio Buddy
 
 A small Windows desktop app for building a service (setlist) order. Add songs, pick the key each one is being sung in, and assign who's leading it. The master song list, default keys, and leader names come from an online Google Sheet.
 
@@ -30,7 +30,7 @@ A small Windows desktop app for building a service (setlist) order. Add songs, p
 
 4. In the app, click **Settings** and paste the ID (or simply the whole sheet URL — the app pulls the ID out of it), then **Save & sync**. If you named the tabs something else, change the tab names there too.
 
-   Settings are stored in `appsettings.json` next to `NovaChurch Audio Buddy.exe`, so you can also edit that file directly:
+   Settings are stored in `appsettings.json` next to `Audio Buddy.exe`, so you can also edit that file directly:
 
    ```json
    {
@@ -43,7 +43,7 @@ A small Windows desktop app for building a service (setlist) order. Add songs, p
 
 ## Running
 
-Double-click `NovaChurch Audio Buddy.exe` (with `appsettings.json` next to it). On launch it pulls both tabs; **Refresh** re-pulls on demand. Every sync also updates the Length and BPM of songs already in the service from the sheet — no need to re-add a song after fixing its timestamp. If there's no internet, it keeps working from the last successful pull and shows *"Using cached list — last synced …"* in the status line.
+Double-click `Audio Buddy.exe` (with `appsettings.json` next to it). On launch it pulls both tabs; **Refresh** re-pulls on demand. Every sync also updates the Length and BPM of songs already in the service from the sheet — no need to re-add a song after fixing its timestamp. If there's no internet, it keeps working from the last successful pull and shows *"Using cached list — last synced …"* in the status line.
 
 ### Using the app
 
@@ -76,18 +76,18 @@ The current service auto-saves on every change (`%APPDATA%\NovaSetlist\current.j
 
 ## Updates
 
-New versions are published as [GitHub releases](https://github.com/DavidPujals/novachurch-audio-buddy/releases). Inside the app, **Settings → About → Check for updates** compares the running version against the latest release; if there's a newer one it downloads it and swaps the exe in place — click **Restart now** to finish. Your `appsettings.json` and saved service are untouched by updates.
+New versions are published as [GitHub releases](https://github.com/DavidPujals/audio-buddy/releases). Inside the app, **Settings → About → Check for updates** compares the running version against the latest release; if there's a newer one it downloads it and swaps the exe in place — click **Restart now** to finish. Your `appsettings.json` and saved service are untouched by updates.
 
 ### Cutting a release (maintainers)
 
-1. Bump `<Version>` in `NovaSetlist/NovaSetlist.csproj` (e.g. `1.2.0`).
-2. Publish (command below), then upload the exe under the asset name `NovaChurchAudioBuddy.exe`:
+1. Bump `<Version>` in `NovaSetlist/NovaSetlist.csproj` (e.g. `1.5.0`).
+2. Publish (command below), then upload the exe under the asset name `AudioBuddy.exe`:
 
    ```
-   gh release create v1.2.0 "NovaChurchAudioBuddy.exe" --title "v1.2.0" --notes "What changed"
+   gh release create v1.5.0 "AudioBuddy.exe" --title "v1.5.0" --notes "What changed"
    ```
 
-   The tag (`v1.2.0`) must match the csproj version — the in-app updater compares them.
+   The tag (`v1.5.0`) must match the csproj version — the in-app updater compares them. Keep exactly one `.exe` asset per release: installs older than the rename look for the previous asset name and fall back to the first `.exe` they find.
 
 ## Building from source
 
@@ -104,4 +104,4 @@ To publish a self-contained single-file exe for Windows x64 (no .NET install nee
 dotnet publish NovaSetlist\NovaSetlist.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o dist
 ```
 
-The result is `dist\NovaChurch Audio Buddy.exe`. Settings live in `appsettings.json` next to the exe — the app creates it when you save Settings, and republishing never overwrites an existing one.
+The result is `dist\Audio Buddy.exe`. Settings live in `appsettings.json` next to the exe — the app creates it when you save Settings, and republishing never overwrites an existing one.

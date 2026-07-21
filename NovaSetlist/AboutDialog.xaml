@@ -20,7 +20,7 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="NovaChurch Audio Buddy" FontSize="17" FontWeight="SemiBold" />
+                <TextBlock Text="Audio Buddy" FontSize="17" FontWeight="SemiBold" />
                 <TextBlock x:Name="VersionText" Foreground="{StaticResource DimBrush}"
                            FontSize="12" Margin="0,3,0,0" />
             </StackPanel>
